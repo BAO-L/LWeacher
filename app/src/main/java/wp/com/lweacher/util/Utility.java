@@ -21,10 +21,10 @@ public class Utility {
     /*
     * 解析处理省的数据
     * */
-    public static boolean handleProvinceResponse(String response){
-        if (!TextUtils.isEmpty(response)){
+    public static boolean handleProvinceResponse(String response) {
+        if (!TextUtils.isEmpty(response)) {
             try {
-                JSONArray allProvince  = new JSONArray(response);
+                JSONArray allProvince = new JSONArray(response);
                 for (int i = 0; i < allProvince.length(); i++) {
                     JSONObject provinceObject = allProvince.getJSONObject(i);
                     Province province = new Province();
@@ -41,8 +41,11 @@ public class Utility {
         return false;
     }
 
-    public static boolean handleCityResponse(String response,int provinceId){
-        if (!TextUtils.isEmpty(response)){
+    /*
+   * 解析处理城市的数据
+   * */
+    public static boolean handleCityResponse(String response, int provinceId) {
+        if (!TextUtils.isEmpty(response)) {
             try {
                 JSONArray allCities = new JSONArray(response);
                 for (int i = 0; i < allCities.length(); i++) {
@@ -62,9 +65,8 @@ public class Utility {
     }
 
 
-
-    public static boolean handleCountyResponse(String response,int cityId){
-        if (!TextUtils.isEmpty(response)){
+    public static boolean handleCountyResponse(String response, int cityId) {
+        if (!TextUtils.isEmpty(response)) {
             try {
                 JSONArray allCities = new JSONArray(response);
                 for (int i = 0; i < allCities.length(); i++) {
@@ -84,7 +86,7 @@ public class Utility {
     }
 
 
-    public static Weather.HeWeatherBean handleWeatherResponse(String response){
-        return new Gson().fromJson(response,Weather.class).getHeWeather().get(0);
+    public static Weather.HeWeatherBean handleWeatherResponse(String response) {
+        return new Gson().fromJson(response, Weather.class).getHeWeather().get(0);
     }
 }

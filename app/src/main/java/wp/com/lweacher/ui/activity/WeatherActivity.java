@@ -1,11 +1,17 @@
 package wp.com.lweacher.ui.activity;
 
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -18,6 +24,7 @@ import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -53,33 +60,64 @@ public class WeatherActivity extends AppCompatActivity {
     ScrollView weatherLayout;
     @BindView(R.id.bing_pic)
     ImageView bingPic;
+    @BindView(R.id.swipe_refresh)
+    public SwipeRefreshLayout swipeRefresh;
+    @BindView(R.id.nav_button)
+    Button navButton;
+    @BindView(R.id.drawer_layout)
+    public DrawerLayout drawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_weathr);
+     /*
+      * 状态栏和背景图融合 （5.0以上）
+      * */
+        if (Build.VERSION.SDK_INT >= 21) {
+            System.out.println("背景图融合。。。。");
+            ;
+            View decorView = getWindow().getDecorView();
+            decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            getWindow().setStatusBarColor(Color.TRANSPARENT);
+        }
+
+        setContentView(R.layout.activity_weather);
         ButterKnife.bind(this);
+        swipeRefresh.setColorSchemeResources(R.color.colorPrimary);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String weatherString = prefs.getString("weather", null);//获取天气缓存
-        String bingURl = prefs.getString("bing_pic",null);//获取必应图片
-        if (bingURl != null){
+        String bingURl = prefs.getString("bing_pic", null);//获取必应图片
+        if (bingURl != null) {
             Glide.with(this).load(bingURl).into(bingPic);
-        }else {
+        } else {
             loadBingPic();
         }
+
+        final String weatherId;
         if (weatherString != null) {
             Weather.HeWeatherBean weather = Utility.handleWeatherResponse(weatherString);
+            weatherId = weather.getBasic().getId();
             showWeatherInfo(weather);
         } else {
-            String weatherId = getIntent().getStringExtra("weather_id");
+            weatherId = getIntent().getStringExtra("weather_id");
+            weatherLayout.setVisibility(View.INVISIBLE);//请求数据时，先隐藏界面，体验更佳
             requestWeather(weatherId);
         }
+
+        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                requestWeather(weatherId);
+            }
+        });
 
 
     }
 
+    /*请求天气数据
+    * */
     public void requestWeather(final String weatherId) {
-        String weatherUrl = "http://guolin.tech/api/weather?cityid=" + weatherId + "&key=ee51f77e11144421903399d6dd3baefd";
+        String weatherUrl = "http://guolin.tech/api/weather?cityid=" + weatherId + "&key=" + Constants.KEY;
         HttpUtil.sendOKHttpRequest(weatherUrl, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -88,6 +126,7 @@ public class WeatherActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         Toast.makeText(WeatherActivity.this, "获取天气信息失败", Toast.LENGTH_SHORT).show();
+                        swipeRefresh.setRefreshing(false);
                     }
                 });
             }
@@ -108,12 +147,17 @@ public class WeatherActivity extends AppCompatActivity {
                         } else {
                             Toast.makeText(WeatherActivity.this, "获取天气信息失败", Toast.LENGTH_SHORT).show();
                         }
+                        swipeRefresh.setRefreshing(false);
                     }
                 });
             }
         });
     }
 
+
+    /*
+    * 显示天气数据
+    * */
     private void showWeatherInfo(Weather.HeWeatherBean weather) {
         String cityName = weather.getBasic().getCity();
         String updateTime = weather.getBasic().getUpdate().getLoc().split(" ")[1];
@@ -154,7 +198,7 @@ public class WeatherActivity extends AppCompatActivity {
     }
 
 
-    private void loadBingPic(){
+    private void loadBingPic() {
 
         HttpUtil.sendOKHttpRequest(Constants.BING_PIC, new Callback() {
             @Override
@@ -167,7 +211,7 @@ public class WeatherActivity extends AppCompatActivity {
                 final String url = response.body().string();
                 SharedPreferences.Editor editor = PreferenceManager
                         .getDefaultSharedPreferences(WeatherActivity.this).edit();
-                editor.putString("bing_pic",url);
+                editor.putString("bing_pic", url);
                 editor.apply();
                 runOnUiThread(new Runnable() {
                     @Override
@@ -177,5 +221,10 @@ public class WeatherActivity extends AppCompatActivity {
                 });
             }
         });
+    }
+
+    @OnClick(R.id.nav_button)
+    public void onViewClicked() {
+        drawerLayout.openDrawer(GravityCompat.START);
     }
 }
