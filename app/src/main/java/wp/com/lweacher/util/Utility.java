@@ -85,6 +85,6 @@ public class Utility {
 
 
     public static Weather.HeWeatherBean handleWeatherResponse(String response){
-        return (Weather.HeWeatherBean) new Gson().fromJson(response,Weather.class).getHeWeather().get(0);
+        return new Gson().fromJson(response,Weather.class).getHeWeather().get(0);
     }
 }

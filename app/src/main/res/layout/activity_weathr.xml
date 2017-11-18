@@ -5,7 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    tools:context="wp.com.lweacher.ui.activity.WeathrActivity">
+    tools:context="wp.com.lweacher.ui.activity.WeatherActivity">
+    <ImageView
+        android:id="@+id/bing_pic"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"/>
     <ScrollView
         android:id="@+id/weather_layout"
         android:layout_width="match_parent"
