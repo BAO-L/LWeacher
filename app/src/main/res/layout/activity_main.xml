@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="wp.com.lweacher.ui.activity.MainActivity">
+    tools:context="wp.com.lweather.ui.activity.MainActivity">
 
  <fragment
      android:id="@+id/choose_area_fragment"
-     android:name="wp.com.lweacher.ui.fragment.ChooseAreaFragment"
+     android:name="wp.com.lweather.ui.fragment.ChooseAreaFragment"
      android:layout_width="match_parent"
      android:layout_height="match_parent"/>
 

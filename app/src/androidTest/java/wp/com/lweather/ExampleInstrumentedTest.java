@@ -1,4 +1,4 @@
-package wp.com.lweacher;
+package wp.com.lweather;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

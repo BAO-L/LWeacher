@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    tools:context="wp.com.lweacher.ui.activity.WeatherActivity">
+    tools:context="wp.com.lweather.ui.activity.WeatherActivity">
     <ImageView
         android:id="@+id/bing_pic"
         android:layout_width="match_parent"
@@ -45,7 +45,7 @@
     </android.support.v4.widget.SwipeRefreshLayout>
         <fragment
             android:id="@+id/choose_area_fragment"
-            android:name="wp.com.lweacher.ui.fragment.ChooseAreaFragment"
+            android:name="wp.com.lweather.ui.fragment.ChooseAreaFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="start"

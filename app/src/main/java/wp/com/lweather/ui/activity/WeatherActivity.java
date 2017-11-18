@@ -1,4 +1,4 @@
-package wp.com.lweacher.ui.activity;
+package wp.com.lweather.ui.activity;
 
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -9,6 +9,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -28,11 +29,11 @@ import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
-import wp.com.lweacher.R;
-import wp.com.lweacher.common.Constants;
-import wp.com.lweacher.gson.Weather;
-import wp.com.lweacher.util.HttpUtil;
-import wp.com.lweacher.util.Utility;
+import wp.com.lweather.R;
+import wp.com.lweather.common.Constants;
+import wp.com.lweather.gson.Weather;
+import wp.com.lweather.util.HttpUtil;
+import wp.com.lweather.util.Utility;
 
 public class WeatherActivity extends AppCompatActivity {
 
@@ -66,7 +67,7 @@ public class WeatherActivity extends AppCompatActivity {
     Button navButton;
     @BindView(R.id.drawer_layout)
     public DrawerLayout drawerLayout;
-    private String weatherId;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +86,7 @@ public class WeatherActivity extends AppCompatActivity {
         setContentView(R.layout.activity_weather);
         ButterKnife.bind(this);
         swipeRefresh.setColorSchemeResources(R.color.colorPrimary);
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String weatherString = prefs.getString("weather", null);//获取天气缓存
         String bingURl = prefs.getString("bing_pic", null);//获取必应图片
         if (bingURl != null) {
@@ -94,22 +95,26 @@ public class WeatherActivity extends AppCompatActivity {
             loadBingPic();
         }
 
-//        final String weatherId;
+        final String[] weatherId = new String[1];
         if (weatherString != null) {
             Weather.HeWeatherBean weather = Utility.handleWeatherResponse(weatherString);
-            weatherId = weather.getBasic().getId();
+            weatherId[0] = weather.getBasic().getId();
             showWeatherInfo(weather);
+            System.out.println("111111111wewather id is "+ weatherId[0]);
         } else {
-            weatherId = getIntent().getStringExtra("weather_id");
+            weatherId[0] = getIntent().getStringExtra("weather_id");
+            System.out.println("222222222wewather id is "+ weatherId[0]);
             weatherLayout.setVisibility(View.INVISIBLE);//请求数据时，先隐藏界面，体验更佳
-            requestWeather(weatherId);
+            requestWeather(weatherId[0]);
         }
 
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                weatherId = getIntent().getStringExtra("weather_id");
-                requestWeather(weatherId);
+
+                weatherId[0] = prefs.getString("weather_id",null);
+                System.out.println("---------onrefreshing--------------"+ weatherId[0]);
+                requestWeather(weatherId[0]);
             }
         });
 

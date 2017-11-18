@@ -1,4 +1,4 @@
-package wp.com.lweacher.common;
+package wp.com.lweather.common;
 
 /**
  * Created by wpuser on 2017/11/18.

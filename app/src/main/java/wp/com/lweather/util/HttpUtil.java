@@ -1,4 +1,4 @@
-package wp.com.lweacher.util;
+package wp.com.lweather.util;
 
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;

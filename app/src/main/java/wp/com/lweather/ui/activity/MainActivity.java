@@ -1,4 +1,4 @@
-package wp.com.lweacher.ui.activity;
+package wp.com.lweather.ui.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -6,7 +6,7 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import wp.com.lweacher.R;
+import wp.com.lweather.R;
 
 public class MainActivity extends AppCompatActivity {
 

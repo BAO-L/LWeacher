@@ -1,4 +1,4 @@
-package wp.com.lweacher.db;
+package wp.com.lweather.db;
 
 import org.litepal.crud.DataSupport;
 

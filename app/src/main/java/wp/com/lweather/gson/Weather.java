@@ -1,4 +1,4 @@
-package wp.com.lweacher.gson;
+package wp.com.lweather.gson;
 
 import java.util.List;
 

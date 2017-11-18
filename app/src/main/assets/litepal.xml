@@ -3,8 +3,8 @@
     <dbname value="l_weather"/>
     <version value="1"/>
     <list>
-        <mapping class="wp.com.lweacher.db.Province"/>
-        <mapping class="wp.com.lweacher.db.City"/>
-        <mapping class="wp.com.lweacher.db.County"/>
+        <mapping class="wp.com.lweather.db.Province"/>
+        <mapping class="wp.com.lweather.db.City"/>
+        <mapping class="wp.com.lweather.db.County"/>
     </list>
 </liletepal>

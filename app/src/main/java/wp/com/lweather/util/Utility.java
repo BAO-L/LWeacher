@@ -1,4 +1,4 @@
-package wp.com.lweacher.util;
+package wp.com.lweather.util;
 
 import android.text.TextUtils;
 
@@ -8,10 +8,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import wp.com.lweacher.db.City;
-import wp.com.lweacher.db.County;
-import wp.com.lweacher.db.Province;
-import wp.com.lweacher.gson.Weather;
+import wp.com.lweather.db.City;
+import wp.com.lweather.db.County;
+import wp.com.lweather.db.Province;
+import wp.com.lweather.gson.Weather;
 
 /**
  * Created by wpuser on 2017/11/18.

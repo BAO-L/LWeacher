@@ -1,8 +1,10 @@
-package wp.com.lweacher.ui.fragment;
+package wp.com.lweather.ui.fragment;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,15 +27,15 @@ import java.util.List;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
-import wp.com.lweacher.R;
-import wp.com.lweacher.common.Constants;
-import wp.com.lweacher.db.City;
-import wp.com.lweacher.db.County;
-import wp.com.lweacher.db.Province;
-import wp.com.lweacher.ui.activity.MainActivity;
-import wp.com.lweacher.ui.activity.WeatherActivity;
-import wp.com.lweacher.util.HttpUtil;
-import wp.com.lweacher.util.Utility;
+import wp.com.lweather.R;
+import wp.com.lweather.common.Constants;
+import wp.com.lweather.db.City;
+import wp.com.lweather.db.County;
+import wp.com.lweather.db.Province;
+import wp.com.lweather.ui.activity.MainActivity;
+import wp.com.lweather.ui.activity.WeatherActivity;
+import wp.com.lweather.util.HttpUtil;
+import wp.com.lweather.util.Utility;
 
 /**
  * Created by wpuser on 2017/11/18.
@@ -94,6 +97,9 @@ public class ChooseAreaFragment extends Fragment {
                         WeatherActivity activity = (WeatherActivity) getActivity();
                         activity.drawerLayout.closeDrawers();
                         activity.swipeRefresh.setRefreshing(true);
+                       SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getContext()).edit();
+                        editor.putString("weather_id",weatherId);
+                        editor.apply();
                         activity.requestWeather(weatherId);
                     }
 
