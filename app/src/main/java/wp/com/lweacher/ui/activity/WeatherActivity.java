@@ -66,6 +66,7 @@ public class WeatherActivity extends AppCompatActivity {
     Button navButton;
     @BindView(R.id.drawer_layout)
     public DrawerLayout drawerLayout;
+    private String weatherId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +94,7 @@ public class WeatherActivity extends AppCompatActivity {
             loadBingPic();
         }
 
-        final String weatherId;
+//        final String weatherId;
         if (weatherString != null) {
             Weather.HeWeatherBean weather = Utility.handleWeatherResponse(weatherString);
             weatherId = weather.getBasic().getId();
@@ -107,6 +108,7 @@ public class WeatherActivity extends AppCompatActivity {
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                weatherId = getIntent().getStringExtra("weather_id");
                 requestWeather(weatherId);
             }
         });
