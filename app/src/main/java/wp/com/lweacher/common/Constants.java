@@ -6,6 +6,6 @@ package wp.com.lweacher.common;
 
 public class Constants {
 
-    public static final String BASE_URL = "http://guolin.tech/api/weather?";
+    public static final String BASE_URL = "http://guolin.tech/api/china";
     public static final String KEY = "ee51f77e11144421903399d6dd3baefd";
 }
