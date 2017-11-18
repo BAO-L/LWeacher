@@ -1,6 +1,7 @@
 package wp.com.lweacher.ui.fragment;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -28,6 +29,7 @@ import wp.com.lweacher.common.Constants;
 import wp.com.lweacher.db.City;
 import wp.com.lweacher.db.County;
 import wp.com.lweacher.db.Province;
+import wp.com.lweacher.ui.activity.WeathrActivity;
 import wp.com.lweacher.util.HttpUtil;
 import wp.com.lweacher.util.Utility;
 
@@ -79,6 +81,12 @@ public class ChooseAreaFragment extends Fragment {
                 }else if(currentLevel == LEVEL_CITY){
                     selectedCity = cityList.get(position);
                     queryCounties();
+                }else if(currentLevel == LEVEL_COUNTY){
+                    String weatherId = countyList.get(position).getWeatherId();
+                    Intent intent = new Intent(getActivity(), WeathrActivity.class);
+                    intent.putExtra("weather_id",weatherId);
+                    startActivity(intent);
+                    getActivity().finish();
                 }
             }
         });

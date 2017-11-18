@@ -2,6 +2,8 @@ package wp.com.lweacher.util;
 
 import android.text.TextUtils;
 
+import com.google.gson.Gson;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -9,6 +11,7 @@ import org.json.JSONObject;
 import wp.com.lweacher.db.City;
 import wp.com.lweacher.db.County;
 import wp.com.lweacher.db.Province;
+import wp.com.lweacher.gson.Weather;
 
 /**
  * Created by wpuser on 2017/11/18.
@@ -80,4 +83,8 @@ public class Utility {
         return false;
     }
 
+
+    public static Weather.HeWeatherBean handleWeatherResponse(String response){
+        return (Weather.HeWeatherBean) new Gson().fromJson(response,Weather.class).getHeWeather().get(0);
+    }
 }
