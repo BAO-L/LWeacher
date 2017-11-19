@@ -1,5 +1,6 @@
 package wp.com.lweather.ui.activity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
@@ -32,6 +33,7 @@ import okhttp3.Response;
 import wp.com.lweather.R;
 import wp.com.lweather.common.Constants;
 import wp.com.lweather.gson.Weather;
+import wp.com.lweather.service.AutoUpdateService;
 import wp.com.lweather.util.HttpUtil;
 import wp.com.lweather.util.Utility;
 
@@ -151,6 +153,9 @@ public class WeatherActivity extends AppCompatActivity {
                             editor.putString("weather", responseText);
                             editor.apply();
                             showWeatherInfo(weather);
+
+                            Intent intent = new Intent(WeatherActivity.this, AutoUpdateService.class);
+                            startService(intent);
                         } else {
                             Toast.makeText(WeatherActivity.this, "获取天气信息失败", Toast.LENGTH_SHORT).show();
                         }
