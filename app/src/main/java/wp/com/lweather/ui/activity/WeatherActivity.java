@@ -189,7 +189,7 @@ public class WeatherActivity extends AppCompatActivity {
             TextView minText = (TextView) view.findViewById(R.id.min_text);
             dataText.setText(forecast.getDate());
             infoText.setText(forecast.getCond().getTxt_d());
-            maxText.setText(forecast.getTmp().getMax());
+            maxText.setText(forecast.getTmp().getMin());
             minText.setText(forecast.getTmp().getMax());
             forecastLayout.addView(view);
         }
@@ -200,7 +200,7 @@ public class WeatherActivity extends AppCompatActivity {
         }
         String comfort = "舒适度：" + weather.getSuggestion().getComf().getTxt();
         String carwash = "洗车指数：" + weather.getSuggestion().getCw().getTxt();
-        String sport = "运动建议：：" + weather.getSuggestion().getSport().getTxt();
+        String sport = "运动建议：" + weather.getSuggestion().getSport().getTxt();
         comfortText.setText(comfort);
         carwashText.setText(carwash);
         sportText.setText(sport);
